@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'optparse'
+require 'ruby-progressbar'
 
 $PATH = ""
 
@@ -51,19 +52,18 @@ def check_for_missing_options(optparse, options)
     end
 end
 
-def extract_and_save(name, file_path)
+def extract_and_save(name, file_path, bar)
     File.open("#{file_path}/#{name}.jpg", "rb") do |motion_photo|
         data = motion_photo.read.split("MotionPhoto_Data");
         if data.length > 1
-            puts "#{name} - Split into 'jpg' & 'mp4'"
+            bar.title=name
             File.open("#{file_path}/#{name}_Extracted.jpg", 'w') { |file| file.write(data[0]) }
             File.open("#{file_path}/#{name}_Extracted.mp4", 'w') { |file| file.write(data[1]) }
             if $DELETE
-                File.delete("#{file_path}/#{name}_Extracted.jpg")
-                puts "#{name} - Original Deleted!"
+                File.delete("#{file_path}/#{name}.jpg")
             end
         else
-            puts "#{name} - Not a MotionPhoto"
+            bar.log "#{name} - Not a MotionPhoto"
         end
     end
 end
@@ -72,12 +72,15 @@ def process_images(folder_path)
     root_folder = File.absolute_path(folder_path)
     if File.directory? folder_path
         image_files = Dir["#{root_folder}/*.jpg"]
+        bar = ProgressBar.create(:title => "Items", :total => image_files.count, :format => "%t: |%B| %j%% %c/%C %a")
     else
         image_files = [folder_path]
+        bar = ProgressBar.create(:title => "Items", :total => 1, :format => "%t: |%B| %j%% %c/%C %a")
     end
     image_files.each do |file|
         file_name = File.basename(file, ".jpg")
-        extract_and_save(file_name, File.dirname(file));
+        extract_and_save(file_name, File.dirname(file), bar);
+        bar.increment
     end
 end
 
