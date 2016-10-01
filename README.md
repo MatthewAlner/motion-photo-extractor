@@ -20,5 +20,6 @@ $ motionPhotoExtractor.rb [options]
 
 | Short | Long           | Description
 | ------|--------------- | --------------------
-| -p    | --path=PATH    | Path of the facebook photo folder
+| -p    | --path=PATH    | Path of the Motion Photos photo folder
+| -v    | --[no-]delete  | Delete the original image after split
 | -h    | --help         | Prints help

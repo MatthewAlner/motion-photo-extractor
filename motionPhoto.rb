@@ -14,6 +14,10 @@ def parse_options()
             options[:path] = path
         end
 
+        opts.on("-d", "--delete", "delete original files") do |d|
+            options[:delete] = d
+        end
+
         opts.on("-h", "--help", "Prints this help") do
             puts opts
             exit
@@ -24,6 +28,7 @@ def parse_options()
     optparse.parse!
 
     if !options[:path].nil? then $PATH = options[:path] end
+    if !options[:delete].nil? then $DELETE = options[:delete] end
 
     puts "Path: " + $PATH.to_s
 
@@ -50,9 +55,13 @@ def extract_and_save(name, file_path)
     File.open("#{file_path}/#{name}.jpg", "rb") do |motion_photo|
         data = motion_photo.read.split("MotionPhoto_Data");
         if data.length > 1
-            puts "#{name} - split"
+            puts "#{name} - Split into 'jpg' & 'mp4'"
             File.open("#{file_path}/#{name}_Extracted.jpg", 'w') { |file| file.write(data[0]) }
             File.open("#{file_path}/#{name}_Extracted.mp4", 'w') { |file| file.write(data[1]) }
+            if $DELETE
+                File.delete("#{file_path}/#{name}_Extracted.jpg")
+                puts "#{name} - Original Deleted!"
+            end
         else
             puts "#{name} - Not a MotionPhoto"
         end
