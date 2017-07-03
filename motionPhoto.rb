@@ -57,8 +57,8 @@ def extract_and_save(name, file_path, bar)
         data = motion_photo.read.split("MotionPhoto_Data");
         if data.length > 1
             bar.title=name
-            File.open("#{file_path}/#{name}_Extracted.jpg", 'w') { |file| file.write(data[0]) }
-            File.open("#{file_path}/#{name}_Extracted.mp4", 'w') { |file| file.write(data[1]) }
+            File.open("#{file_path}/#{name}_Extracted.jpg", 'wb') { |file| file.write(data[0]) }
+            File.open("#{file_path}/#{name}_Extracted.mp4", 'wb') { |file| file.write(data[1]) }
             if $DELETE
                 File.delete("#{file_path}/#{name}.jpg")
             end
