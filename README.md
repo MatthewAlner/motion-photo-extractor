@@ -6,7 +6,13 @@ It's a command line ruby script that splits your S7/S7 Edge motion photos in to 
 
 The files will be saved in the same folder the original image.
 
-## Examples
+## Setup
+
+    - You want Ruby on you path (tested with 2.4.3)
+    - Install Bundler if you don't have it ```$ gem install bundler```
+    - Then run a ```$ bundle install```
+
+## Examples of use
 
 $ motionPhotoExtractor.rb -p /Users/YourName/Desktop/Desktop/FolderWithMotionPhotosInIt
 

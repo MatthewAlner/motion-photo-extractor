@@ -1,0 +1,17 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ruby-progressbar (1.9.0)
+    rubysl-optparse (2.0.1)
+      rubysl-shellwords (~> 2.0)
+    rubysl-shellwords (2.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ruby-progressbar
+  rubysl-optparse
+
+BUNDLED WITH
+   1.16.0
